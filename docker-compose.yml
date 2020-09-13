@@ -1,14 +1,9 @@
 version: "3.2"
 
 services:
-  springboot-jwt-starter:
-    container_name: springboot-jwt-starter
+  auth-svr:
+    container_name: auth-svr
     build: .
     ports:
       - "8080:8080"
-    networks:
-    - default
-    - rocksea
-networks:
-  rocksea:
-    driver: bridge
+    #network_mode: "host"

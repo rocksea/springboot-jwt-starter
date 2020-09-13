@@ -79,7 +79,7 @@ public class AuthenticationControllerTest {
 
         ReflectionTestUtils.setField(tokenHelper, "EXPIRES_IN", 100); // 100 sec
         ReflectionTestUtils.setField(tokenHelper, "MOBILE_EXPIRES_IN", 200); // 200 sec
-        ReflectionTestUtils.setField(tokenHelper, "SECRET", "queenvictoria");
+        ReflectionTestUtils.setField(tokenHelper, "SECRET", "rocksea");
     }
 
     @Test

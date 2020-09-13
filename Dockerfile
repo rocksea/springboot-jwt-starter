@@ -1,13 +1,17 @@
-FROM gradle
-
-RUN mkdir /usr/local/work/app
-WORKDIR /usr/local/work/app
-
-COPY . .
-RUN gradle build
-
-FROM adoptopenjdk/openjdk11
-RUN adduser -Dh /home/rocksea rocksea
+FROM adoptopenjdk:8-jdk-hotspot AS builder
+RUN mkdir /app
 WORKDIR /app
-COPY /usr/src/app/target/auth-0.1.0-SNAPSHOT.jar .
-ENTRYPOINT ["java", "-jar", "/app/auth-0.1.0-SNAPSHOT.jar"]
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle . 
+COPY src src
+RUN chmod +x ./gradlew
+RUN SPRING_PROFILES_ACTIVE=docker ./gradlew bootjar
+
+FROM adoptopenjdk/openjdk11:ubi
+#FROM adoptopenjdk:8-jdk-hotspot
+WORKDIR /app
+COPY --from=builder /app/build/libs/*.jar auth.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "auth.jar"]

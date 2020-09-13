@@ -11,12 +11,14 @@ jwt:
   secret: rocksea
 
 spring:
+  profiles:
+    active: docker
   jpa:
     hibernate:
       # possible values: validate | update | create | create-drop
       # ddl-auto: create
   datasource:
-    url: jdbc:mysql://localhost:3306/jwt?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    url: jdbc:mysql://host.docker.internal:3306/jwt?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
     username: rocksea
     password: gogo1234
     driver-class-name: com.mysql.cj.jdbc.Driver
